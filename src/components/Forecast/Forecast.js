@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Conditions from "../Conditions/Conditions";
 import classes from "./Forecast.module.css";
-import umbrella from "../../assets/umbrella.jpg";
-import lake from "../../assets/lake.jpg";
-import lakeGif from "../../assets/lake.gif";
-import stars from "../../assets/stars.jpg";
+import clearSky from "../../assets/clearSky.gif";
+import brokenClouds from "../../assets/brokenClouds.gif";
+import lightRain from "../../assets/lightRain.gif";
+import moderateRain from "../../assets/moderateRain.gif";
+import overcastClouds from "../../assets/overcastClouds.gif";
+import fewClouds from "../../assets/fewClouds.gif";
+import scatClouds from "../../assets/scatClouds.gif";
+
 import '../../App.css'
 
 
-const Forecast = ({setGif}) => {
+
+
+const Forecast = ({setGif, setLocation}) => {
     
     const [responseObj, setResponseObj] = useState({});
     const [city, setCity] = useState("");
@@ -31,7 +37,7 @@ const Forecast = ({setGif}) => {
         "X-RapidAPI-Key": process.env.REACT_APP_api_key,
       },
     };
-
+    
     setError(false);
     setResponseObj({});
     setLoading(true);
@@ -46,15 +52,30 @@ const Forecast = ({setGif}) => {
         if (response.cod !== 200) {
           throw new Error();
         }
+        
+        
+        setLocation(city)
         setResponseObj(response);
         setLoading(false);
         if (response.weather[0].description === "overcast clouds") {
-          setGif(umbrella);
+          setGif(overcastClouds);
+  
         } else if (response.weather[0].description === "light rain") {
-          setGif(stars);
+          setGif(lightRain);
+        } else if (response.weather[0].description === "broken clouds") {
+          setGif(brokenClouds);
+          
+        } else if (response.weather[0].description === "moderate rain") {
+          setGif(moderateRain);
+        } else if (response.weather[0].description === "few clouds") {
+          setGif(fewClouds);
         } else if (response.weather[0].description === "clear sky") {
-          setGif(lakeGif);
+          setGif(clearSky);
+        } else if (response.weather[0].description === "scattered clouds") {
+          setGif(scatClouds);
         }
+      
+      
         
         
       })
@@ -74,6 +95,7 @@ const Forecast = ({setGif}) => {
           placeholder="Enter City"
           maxLength="50"
           value={city}
+          
           className={classes.textInput}
           onChange={(e) => setCity(e.target.value)}
         />
@@ -108,6 +130,7 @@ const Forecast = ({setGif}) => {
         error={error}
         loading={loading}
       />
+      
       
     </div>
   );

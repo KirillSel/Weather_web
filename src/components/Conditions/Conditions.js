@@ -8,7 +8,7 @@ const Conditions = (props) => {
         <>
             <div className={classes.Wrapper}>
                 {props.error && <small className={classes.Small}>Please enter a valid city.</small>}
-                {props.loading && <div className={classes.Loader}>Loading...</div>}
+                {props.loading && <div className={classes.Loader}></div>}
                 {props.responseObj.cod === 200 ?
                     <div>
                         <p><strong>{props.responseObj.name}</strong></p>

@@ -1,20 +1,22 @@
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import Forecast from "./components/Forecast/Forecast";
 import React from "react";
 import './App.css'
-import Logo from './components/Logo/Logo';
+
 
 
 function App() {
   const [gif, setGif] = useState();
-  
+  const [location, setLocation] = useState()
+
   return (
     <div className="App">
       <header className="App-header" style={{backgroundImage: `url(${gif})`}}>
         <h1>React Weather App</h1>
+        <h2>{location}</h2>
       </header>
       <main>
-        <Forecast setGif={setGif} />
+        <Forecast setGif={setGif} setLocation={setLocation}/>
       </main>
       <footer>
         Page created by Kirill Selivanov
